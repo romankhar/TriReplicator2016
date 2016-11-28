@@ -1,0 +1,45 @@
+<server description="Tri-Replicator Liberty Server">
+	<featureManager>
+		<feature>jsp-2.3</feature>
+		<feature>concurrent-1.0</feature>
+		<feature>jaxrs-2.0</feature>
+		<feature>jaxrsClient-2.0</feature>
+		<feature>jpa-2.1</feature>
+		<feature>appSecurity-2.0</feature>
+		<feature>ssl-1.0</feature>
+		<feature>localConnector-1.0</feature>
+	</featureManager>
+
+	<!-- Depending on deployment target this file jdbc.xml needs to be copied from one of the other jdbc-*.xml in this directory -->
+	<include location="jdbc.xml" />
+
+	<!-- To access this server from a remote client add a host attribute to the following element, e.g. host="*" -->
+	<httpEndpoint httpPort="9080" httpsPort="9443" id="defaultHttpEndpoint" />
+
+	<!-- When the app starts it needs to initialize itself, the database, security, etc. and hence I can't defer servlet load 
+		till later -->
+	<webContainer deferServletLoad="false" />
+
+	<applicationMonitor updateTrigger="mbean" />
+
+	<!-- This is the application itself -->
+	<webApplication contextRoot="/" id="Tri-Replicator" location="Tri-Replicator.war" name="Tri-Replicator">
+		<application-bnd>
+			<security-role name="administrators">
+				<group name="adminUsers" />
+			</security-role>
+		</application-bnd>
+	</webApplication>
+
+	<basicRegistry id="basic" realm="BasicRegistry" >
+		<user name="roman" password="{hash}putrealpasswordhere" />
+		<group name="adminUsers">
+			<member name="roman" />
+		</group>
+	</basicRegistry>
+
+	<!-- Depending on deployment target this file jdbc.xml needs to be copied from one of the other jdbc-*.xml in this directory -->
+	<include location="logging.xml" />
+
+	<keyStore id="defaultKeyStore" location="triReplicatorKeyStore.p12" password="{xor}putrealstuffhere"></keyStore>
+</server>

@@ -1,0 +1,17 @@
+<!-- 
+	This file defines JDBC connection pool for the app when it is run locally on the laptop and needs to be connected 
+	to local Derby DB. In order to use this configuration, copy this file into the "jdbc.xml" file before running it locally. 
+-->
+
+<server>
+	<jdbcDriver id="JDBCdriver">
+		<library name="derbyJDBC">
+			<fileset dir="C:\projects_c\Tri-Replicator-16\db\db-derby-10.11.1.1-bin\lib" includes="derby.jar" />
+		</library>
+	</jdbcDriver>
+
+	<dataSource jdbcDriverRef="JDBCdriver" jndiName="jdbc/TriReplicatorDB">
+		<properties createDatabase="create" databaseName="C:/projects_c/Tri-Replicator-16/db/TriReplicator-derby-db-instance" />
+	</dataSource> 
+	
+</server>

@@ -1,0 +1,35 @@
+<!-- 
+	This file defines JDBC connection pool for the app when it is deployed on a laptop and needs to be connected 
+	to ElephantSQL in the cloud. In order to use this configuration, copy this file into the "jdbc.xml" file before deploying 
+	the app into local Liberty instance. 
+-->
+
+<server>
+	<variable name='cloud.services.ElephantSQL-tri-replicator.name' value='ElephantSQL-tri-replicator' />
+	<variable name='cloud.services.ElephantSQL-tri-replicator.label' value='elephantsql' />
+	<variable name='cloud.services.ElephantSQL-tri-replicator.plan' value='turtle' />
+	<variable name='cloud.services.ElephantSQL-tri-replicator.connection.uri' value='postgres://xedeshdt:put-real-credentials-here@jumbo.db.elephantsql.com:5432/xedeshdt' />
+	<variable name='cloud.services.ElephantSQL-tri-replicator.connection.max_conns' value='5' />
+	<variable name='cloud.services.ElephantSQL-tri-replicator.connection.name' value='xedeshdt' />
+	<variable name='cloud.services.ElephantSQL-tri-replicator.connection.host' value='jumbo.db.elephantsql.com' />
+	<variable name='cloud.services.ElephantSQL-tri-replicator.connection.port' value='5432' />
+	<variable name='cloud.services.ElephantSQL-tri-replicator.connection.user' value='xedeshdt' />
+	<variable name='cloud.services.ElephantSQL-tri-replicator.connection.password' value='put-real-credentials-here' />
+	<variable name='cloud.services.ElephantSQL-tri-replicator.connection.hostname' value='jumbo.db.elephantsql.com' />
+	<variable name='cloud.services.ElephantSQL-tri-replicator.connection.username' value='xedeshdt' />
+
+	<jdbcDriver id="JDBCdriver" javax.sql.XADataSource='org.postgresql.xa.PGXADataSource'
+		javax.sql.ConnectionPoolDataSource='org.postgresql.ds.PGConnectionPoolDataSource'>
+		<library name="PostgresJDBC">
+			<fileset dir='C:\projects_c\Tri-Replicator-16\db\PostgreSQL.9.3.6' includes='postgresql-jdbc-9.4.1209.jar' />
+		</library>
+	</jdbcDriver>
+
+	<dataSource id="postgresqlBMX" jdbcDriverRef="JDBCdriver" jndiName="jdbc/TriReplicatorDB" transactional='false'
+		type='javax.sql.ConnectionPoolDataSource'>
+		<properties databaseName="${cloud.services.ElephantSQL-tri-replicator.connection.name}" user="${cloud.services.ElephantSQL-tri-replicator.connection.user}"
+			password="${cloud.services.ElephantSQL-tri-replicator.connection.password}" serverName="${cloud.services.ElephantSQL-tri-replicator.connection.host}"
+			portNumber="${cloud.services.ElephantSQL-tri-replicator.connection.port}" />
+	</dataSource>
+
+</server>

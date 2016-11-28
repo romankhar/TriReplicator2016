@@ -1,0 +1,11 @@
+<!-- 
+	This file defines loggin level for DESKTOP test environment.  
+	In order to use this configuration, copy this file into the "logging.xml" file before running it locally. 
+-->
+
+<server>
+	<!-- For more info on logging levels see: http://www-01.ibm.com/support/knowledgecenter/SSCKBL_8.5.5/com.ibm.websphere.wlp.nd.doc/ae/rwlp_logging.html -->
+	<!-- <logging consoleLogLevel="AUDIT" /> -->
+	<logging consoleLogLevel="INFO" />
+	<logging traceSpecification="com.trireplicator.*=info" traceFileName="stdout" />
+</server>

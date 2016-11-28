@@ -1,0 +1,17 @@
+<!-- 
+	This file defines JDBC connection pool for the app when it is deployed in Bluemix environment and needs to be connected 
+	to ElephantSQL. In order to use this configuration, copy this file into the "jdbc.xml" file before packaging and deploying 
+	the app into Bluemix. 
+-->
+	
+<server>
+	<jdbcDriver id="JDBCdriver" javax.sql.ConnectionPoolDataSource='org.postgresql.ds.PGConnectionPoolDataSource'>
+		<library name="libJDBC">
+			<fileset dir="this is to be overriden by Bluemix" includes="this is to be overriden by Bluemix" />
+		</library>
+	</jdbcDriver>
+
+	<dataSource id="postgresqlBMX" jdbcDriverRef="JDBCdriver" jndiName="jdbc/TriReplicatorDB" transactional='false'>
+		<properties databaseName="this is to be overriden by Bluemix" />
+	</dataSource>
+</server>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app id="Tri-Replicator" version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+
+	<display-name>Tri-Replicator</display-name>
+
+	<welcome-file-list>
+		<welcome-file>Home.html</welcome-file>
+	</welcome-file-list>
+
+	<servlet>
+		<servlet-name>AdminServlet</servlet-name>
+		<servlet-class>com.trireplicator.server.AdminServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>AdminServlet</servlet-name>
+		<!-- /admin is a security protected URL so this must not be moved outside of it -->
+		<url-pattern>/admin/admin</url-pattern> 
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>synchronizerServlet</servlet-name>
+		<servlet-class>com.trireplicator.server.SynchronizerServiceImpl</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>synchronizerServlet</servlet-name>
+		<url-pattern>/home_page/synchronizer</url-pattern>
+	</servlet-mapping>
+
+	<listener>
+		<display-name>Initialize application settings</display-name>
+		<listener-class>com.trireplicator.server.ServletListener</listener-class>
+	</listener>
+
+<!-- ==================================== SECURITY DETAILS -->
+	<security-constraint>
+		<display-name>Set SSL for all connections all the time for all pages. No plain HTTP is allowed</display-name>
+		<web-resource-collection>
+			<web-resource-name>All_pages</web-resource-name>
+			<description>HTTPS redirect</description>
+			<url-pattern>/*</url-pattern>
+		</web-resource-collection>
+		<user-data-constraint>
+			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
+
+	<login-config>
+		<auth-method>BASIC</auth-method>
+	</login-config>
+
+	<session-config>
+		<session-timeout>1</session-timeout>
+	</session-config>
+
+	<security-role>
+		<description>those people who can manage the web app, delete users, etc. via special protected web pages</description>
+		<role-name>administrators</role-name>
+	</security-role>
+
+	<security-constraint>
+		<display-name>Protecting administrative pages</display-name>
+		<web-resource-collection>
+			<web-resource-name>Admin_pages</web-resource-name>
+			<url-pattern>/admin/*</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>administrators</role-name>
+		</auth-constraint>
+		<user-data-constraint>
+			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint> 
+
+<!-- ==================================== DATA SOURCE -->
+	<resource-ref id="DataSource_Transactional_ResourceRef">
+		<res-ref-name>jdbc/TriReplicatorDB</res-ref-name>
+		<res-type>javax.sql.DataSource</res-type>
+		<res-auth>Container</res-auth>
+		<res-sharing-scope>Shareable</res-sharing-scope>
+	</resource-ref>
+
+	<persistence-context-ref>
+		<persistence-context-ref-name>jpa/TriReplicatorEntityManager</persistence-context-ref-name>
+		<persistence-unit-name>TriReplicatorPersistenceUnit</persistence-unit-name>
+	</persistence-context-ref>
+
+</web-app>

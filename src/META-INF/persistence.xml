@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+
+	<persistence-unit name="TriReplicatorPersistenceUnit" transaction-type="JTA">
+		<jta-data-source>java:comp/env/jdbc/TriReplicatorDB</jta-data-source>
+		<class>com.trireplicator.db.AppConfig</class>
+		<class>com.trireplicator.db.AdminEvents</class>
+		<class>com.trireplicator.db.User</class>
+		<class>com.trireplicator.db.Workout</class>
+		<class>com.trireplicator.shared.WorkoutSession</class>
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
+		<properties>
+			<property name="eclipselink.target-database" value="Derby" />
+			<property name="eclipselink.target-server" value="WebSphere_Liberty" />
+			<property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver" />
+ 			<property name="eclipselink.ddl-generation" value="create-tables" /> 
+			<!-- <property name="eclipselink.ddl-generation" value="drop-and-create-tables" />  -->
+			<property name="eclipselink.ddl-generation.output-mode" value="database" />
+			<!-- For debugging use value="FINEST". For more details on logging see this: https://wiki.eclipse.org/EclipseLink/Examples/JPA/Logging#Log_Levels -->
+			<property name="eclipselink.logging.level" value="INFO" />
+			<property name="javax.persistence.jtaDataSource" value="java:comp/env/jdbc/TriReplicatorDB" />
+		</properties>
+	</persistence-unit>
+</persistence>

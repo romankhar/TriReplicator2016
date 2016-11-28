@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>Tri-Replicator configuration</title>
+</head>
+<body>
+	<h1>Configuration for Tri-Replicator</h1>
+	<FORM METHOD="get" ACTION="admin">
+		<p><br> 
+		Environment name: <input type="text" name="environmentName"> - PROD, TEST, DEV, etc.<br>
+		Competition start date: <input type="date" name="start_date"> - see date patterns below<br> 
+		Competition end	date: <input type="date" name="end_date"> - see date patterns below<br>
+		Date format: <input type="text" name="datePattern"> - by default - (MM/dd/yyyy)<br>
+		How many days back workouts can be added: <input type="number" name="days_back_for_entering"> (in days) <br>
+		Replication frequency for all athletes: <input type="number" name="replicationFrequency"> (every X minutes) <br>
+		Total # of workouts in prior years: <input type="number" name="totalWorkoutsPriorYears"> (integer) <br>
+		Configuration reload interval: <input type="number" name="reloadInterval"> (every X minutes) <br><br><br>
+		<input type="submit" name="action" value="Update">
+		</p>
+	</form>
+</body>
+</html>
